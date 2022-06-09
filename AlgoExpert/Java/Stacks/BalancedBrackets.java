@@ -1,0 +1,42 @@
+/*
+
+Write a function that takes in a string made up of brackets ((,[,{,),], and }) and other optional characters. The function should return a
+boolean representing whether the string is balanced with regards to brackets.
+
+A string is said to be balanced if it has as many opening brackets of a
+certain type as it has closing brackets of that type and if no bracket is
+unmatched. Note that an opening bracket can't match a corresponding closing
+bracket that comes before it, and similarly, a closing bracket can't match a
+corresponding opening bracket that comes after it. Also, brackets can't
+overlap each other as in [(]).
+Sample Input
+string = "([])(){}(())()()"
+Sample Output
+true // it's balanced
+*/
+import java.util.*;
+class BalancedBrackets{
+    public static void main(String[] args){
+        String str = "([])(){}(())()()";
+        boolean isBalanced = balancedBrackets(str);
+        System.out.println(isBalanced);
+    }
+
+    public static boolean balancedBrackets(String str){
+        Stack<Character> stack = new Stack<>();
+        for(int i=0;i<str.length();i++){
+            Character ch = str.charAt(i);
+            if(ch == '{' || ch == '(' || ch == '[')
+                stack.push(ch);
+            else if(ch == '}' || ch == ')' || ch == ']'){
+                if(stack.empty()) return false;
+                Character poppedCharacter = stack.pop();
+                boolean isMatch = (ch == '}' && poppedCharacter == '{') ||
+                        (ch == ')' && poppedCharacter == '(') ||
+                        (ch == ']' && poppedCharacter == '[');
+                if(!isMatch) return false;
+            }
+        }
+        return stack.empty();
+    }
+}
